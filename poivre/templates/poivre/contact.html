@@ -1,0 +1,79 @@
+{% extends 'poivre/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- END nav -->
+    {% if msg %}
+    <center>
+      <br> <br> <br> <br> <br> <br> <br>
+      <h5> {{ msg }}</h5>
+      <p>Votre message a été bien envoyé, nous vous contacterons le plus tôt que possible</p>
+      <br>
+      <p style="color: greenyellow;">Penjaman vous dit Merci...</p>
+      <br> 
+      <h5>Revenez à l'accueil à partir de ce lien</h5> 
+      <br>
+      <a href="{% url 'home' %}"><button class="btn btn-primary py-3 px-5">ACCUEIL</button></a>
+      <br>
+      <br> <br> <br> <br> <br> <br>
+    </center>
+    {% else %}
+
+
+    <section class="ftco-section contact-section bg-light">
+      <div class="container">
+      	<div class="row d-flex mb-5 contact-info">
+          <div class="w-100"></div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Phone:</span> <a href="tel://237696697551">+237 697950582</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Website</span> <a href="#">yoursite.com</a></p>
+	          </div>
+          </div>
+        </div>
+        <div class="row block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form action="{% url 'contact' %}" method="POST" class="bg-white p-5 contact-form">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="text" name = "message-name"  class="form-control" placeholder="Your Name">
+              </div>
+              <div class="form-group">
+                <input type="email" name = "message-email" class="form-control" placeholder="Your Email" required>
+              </div>
+              <div class="form-group">
+                <input type="text" name = "message-subject" class="form-control" placeholder="Subject">
+              </div>
+              <div class="form-group">
+                <textarea name="message" id="form_message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+            <div id="map" class="bg-white"></div>
+          	<!--<div id="map" class="bg-white"></div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% endblock content %} 
