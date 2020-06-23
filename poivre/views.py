@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404 
 from django.http import JsonResponse, HttpResponse
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
@@ -6,6 +6,7 @@ from .models import *
 import json
 import datetime
 from .utils import cookieCart, cartData, guestOrder
+from django.contrib.auth.models import User
 # Create your views here.
 
 def home(request):
@@ -54,6 +55,13 @@ def store(request):
 	products = Product.objects.all()
 	context = {'products':products, 'cartItems':cartItems}
 	return render(request, 'poivre/shop.html', context)
+
+def details(request, id):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	product = get_object_or_404(Product, id=id)
+	context = {'product':product, 'cartItems':cartItems}
+	return render(request, 'poivre/product-single.html', context)
 
 
 def cart(request):

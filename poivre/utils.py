@@ -1,5 +1,6 @@
 import json
 from .models import *
+from django.contrib.auth.models import User
 
 def cookieCart(request):
 

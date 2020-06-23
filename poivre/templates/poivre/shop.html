@@ -21,7 +21,7 @@
 				{% for product in products %}
     			<div class="col-md-6 col-lg-3 ftco-animate">
     				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="{{ product.imageURL }}" alt="SAAHMATHWORKS">
+    					<a href="{% url 'singleDetail' product.id %}" class="img-prod"><img class="img-fluid" src="{{ product.imageURL }}" alt="SAAHMATHWORKS">
     						<span class="status">{{ product.remise }}%</span>
     						<div class="overlay"></div>
     					</a>
@@ -52,7 +52,7 @@
 	    							</a>
 									-->
 
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
+	    							<a href="{% url 'singleDetail' product.id %}" class="heart d-flex justify-content-center align-items-center ">
 	    								<span><i class="ion-ios-heart"></i></span>
 	    							</a>
     							</div>
