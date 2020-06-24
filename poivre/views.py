@@ -7,6 +7,7 @@ import json
 import datetime
 from .utils import cookieCart, cartData, guestOrder
 from django.contrib.auth.models import User
+from .forms import NouveauContactForm
 # Create your views here.
 
 def home(request):
@@ -15,11 +16,13 @@ def home(request):
 	cartItems = data['cartItems']
 
 	products = Product.objects.all()
-	context = {'products':products, 'cartItems':cartItems}
+	reviews = Review.objects.all()
+	context = {'products':products, 'cartItems':cartItems, 'reviews': reviews}
 	return render(request, 'poivre/home.html', context)
 
 
 def contact(request):
+
     if request.method == 'POST':
         message_name = request.POST['message-name']
         message_email = request.POST['message-email']
@@ -37,7 +40,8 @@ def contact(request):
             )
             print(message_email)
             msg = "success"
-        except BadHeaderError:
+        except:
+			#except BadHeaderError:
             msg = "error"
         return render(request, 'poivre/contact.html', {'msg': msg})
     
@@ -45,21 +49,23 @@ def contact(request):
 
 
 
-def store(request):
+def shop(request, id):
 	data = cartData(request)
-
 	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
+	categories = Categorie.objects.all()
+	if id == '0':
+		products = Product.objects.all()
+		print('je l ai !')
+	else:
+		products = Product.objects.filter(categorie__id=id)
 
-	products = Product.objects.all()
-	context = {'products':products, 'cartItems':cartItems}
+	context = {'products':products, 'cartItems':cartItems, 'categories': categories}
 	return render(request, 'poivre/shop.html', context)
 
-def details(request, id):
+def details(request, id, slug):
 	data = cartData(request)
 	cartItems = data['cartItems']
-	product = get_object_or_404(Product, id=id)
+	product = get_object_or_404(Product, id=id, slug=slug)
 	context = {'product':product, 'cartItems':cartItems}
 	return render(request, 'poivre/product-single.html', context)
 
@@ -73,6 +79,15 @@ def cart(request):
 
 	context = {'items':items, 'order':order, 'cartItems':cartItems}
 	return render(request, 'poivre/cart.html', context)
+
+def about(request):
+	data = cartData(request)
+
+	cartItems = data['cartItems']
+	reviews = Review.objects.all()
+
+	context = {'cartItems':cartItems, 'reviews': reviews}
+	return render(request, 'poivre/about.html', context)
 
 def checkout(request):
 	data = cartData(request)
@@ -103,6 +118,11 @@ def updateItem(request):
 		orderItem.quantity = (orderItem.quantity - 1)
 
 	orderItem.save()
+
+	if action == 'del':
+		orderItem.delete()
+
+		
 
 	if orderItem.quantity <= 0:
 		orderItem.delete()
@@ -138,3 +158,28 @@ def processOrder(request):
 		)
 
 	return JsonResponse('Payment submitted..', safe=False)
+
+def review(request):
+	data = cartData(request)
+	
+	cartItems = data['cartItems']
+	reviews = Review.objects.all()
+	sauvegarde = False
+	form = NouveauContactForm(request.POST or None, request.FILES)
+	if form.is_valid():
+		review = Review()
+		review.name = form.cleaned_data["name"]
+		review.avis = form.cleaned_data["avis"]
+		review.profession = form.cleaned_data["profession"]
+		review.image = form.cleaned_data["photo"]
+		review.save()
+		sauvegarde = True    
+	return render(request, 'poivre/review.html', {
+		'form': form, 
+		'sauvegarde': sauvegarde,
+		'reviews': reviews,
+		'cartItems': cartItems
+	})
+	
+
+	

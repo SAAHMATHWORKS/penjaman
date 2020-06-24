@@ -9,11 +9,10 @@
     		<div class="row justify-content-center">
     			<div class="col-md-10 mb-5 text-center">
     				<ul class="product-category">
-    					<li><a href="#" class="active">All</a></li>
-    					<li><a href="#">Vegetables</a></li>
-    					<li><a href="#">Fruits</a></li>
-    					<li><a href="#">Juice</a></li>
-    					<li><a href="#">Dried</a></li>
+						<li><a href="{% url 'shop' 0 %}" class="active">ALL</a></li>
+						{% for categorie in categories %}
+    					<li><a href="{% url 'shop' categorie.id %}">{{ categorie.nom }}</a></li>
+						{% endfor %}
     				</ul>
     			</div>
     		</div>
@@ -21,7 +20,7 @@
 				{% for product in products %}
     			<div class="col-md-6 col-lg-3 ftco-animate">
     				<div class="product">
-    					<a href="{% url 'singleDetail' product.id %}" class="img-prod"><img class="img-fluid" src="{{ product.imageURL }}" alt="SAAHMATHWORKS">
+    					<a href="{% url 'singleDetail' product.id product.slug %}" class="img-prod"><img class="img-fluid" src="{{ product.imageURL }}" alt="SAAHMATHWORKS">
     						<span class="status">{{ product.remise }}%</span>
     						<div class="overlay"></div>
     					</a>
@@ -52,7 +51,7 @@
 	    							</a>
 									-->
 
-	    							<a href="{% url 'singleDetail' product.id %}" class="heart d-flex justify-content-center align-items-center ">
+	    							<a href="{% url 'singleDetail' product.id product.slug %}" class="heart d-flex justify-content-center align-items-center ">
 	    								<span><i class="ion-ios-heart"></i></span>
 	    							</a>
     							</div>
@@ -97,5 +96,10 @@
           </div>
         </div>
       </div>
-    </section>
+	</section>
+	
+	<script type="text/javascript">
+		var active = document.getElementsByClassName('active')
+
+	</script>
 	{% endblock content %}

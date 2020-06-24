@@ -6,7 +6,7 @@
     <section class="ftco-section ftco-cart">
 		<div class="container">
 			<p>
-				<a href="shop.html" class="btn btn-primary py-3 px-5">
+				<a href="{% url 'shop' 1 %}" class="btn btn-primary py-3 px-5">
 					&#x2190; Back to shop
 				</a>
 			</p>
@@ -29,7 +29,7 @@
 						<tbody>
 						{% for item in items %}
 							<tr class="text-center">
-							<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+							<td class="product-remove"><a href="#" data-product="{{item.product.id}}" data-action="del" class="update-cart"><span class="ion-ios-close"></span></a></td>
 							
 							<td class="image-prod"><div class="img" style="background-image:url({{item.product.imageURL}});"></div></td>
 							
