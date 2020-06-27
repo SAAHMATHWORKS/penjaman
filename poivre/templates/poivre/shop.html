@@ -9,9 +9,9 @@
     		<div class="row justify-content-center">
     			<div class="col-md-10 mb-5 text-center">
     				<ul class="product-category">
-						<li><a href="{% url 'shop' 0 %}" class="active">ALL</a></li>
+						<li><a href="{% url 'shop' 0 'All' %}" class="active">ALL</a></li>
 						{% for categorie in categories %}
-    					<li><a href="{% url 'shop' categorie.id %}">{{ categorie.nom }}</a></li>
+    					<li><a href="{% url 'shop' categorie.id categorie.nom %}">{{ categorie.nom }}</a></li>
 						{% endfor %}
     				</ul>
     			</div>

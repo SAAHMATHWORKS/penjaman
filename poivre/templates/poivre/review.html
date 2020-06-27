@@ -23,22 +23,16 @@
     <section class="ftco-section contact-section bg-light">
       <div class="container">
         <div class="row block-9">
-          <div class="col-md-6 order-md-last d-flex">
-            <form method="post" enctype="multipart/form-data">
+          <div class="col-md-9 order-md-last d-flex">
+            <form method="post" enctype="multipart/form-data" class="justify-content-center">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit"/>
+                {{ form.as_p}}
+                <button type="submit", class="btn btn-outline-success">Submit your review</button>
              </form>
           
           </div>
 
-          <div class="col-md-6 d-flex" style="background-color: white;">
-            <div class="bg-white">
-                <br> <br><br><br><br><br><br><br><br><br>
-                <hr>
-                <center><h1><span class="subheading">Laissez Votre Avis ici!</span></h1></center>
-                <hr>
-            </div>
+          <div class="col-md-3 d-flex">
           	<!--<div id="map" class="bg-white"></div> -->
           </div>
         </div>

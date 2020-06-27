@@ -6,7 +6,7 @@ urlpatterns = [
     #Leave as empty string for base url
     path('', views.home, name="home"),
     path('contact.html', views.contact, name="contact"),
-    url(r'^shop/(?P<id>\d+)$', views.shop, name="shop"),
+    url(r'^shop/(?P<id>\d+)-(?P<nom>.+)$', views.shop, name="shop"),
     url(r'^product/(?P<id>\d+)-(?P<slug>.+)$', views.details, name='singleDetail'),
     path('cart.html', views.cart, name="cart"),
     path('about.html', views.about, name="about"),

@@ -49,9 +49,10 @@ def contact(request):
 
 
 
-def shop(request, id):
+def shop(request, id, nom):
 	data = cartData(request)
 	cartItems = data['cartItems']
+	print(nom)
 	categories = Categorie.objects.all()
 	if id == '0':
 		products = Product.objects.all()
